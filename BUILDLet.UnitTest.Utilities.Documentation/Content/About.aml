@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="dd2e80a9-0ae2-4a43-bece-2e4dc1de28df" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>
+        This is Help Documentation of <application>BUILDLet Unit Test Utility</application>.
+      </para>
+		</introduction>
+
+		<section>
+			<title>Namespaces</title>
+			<content>
+        <para>This Help Documentation describes about the following namespaces.</para>
+
+        <table>
+
+          <!-- Table Header -->
+          <tableHeader>
+            <row>
+              <entry>
+                <para>Namespace</para>
+              </entry>
+              <entry>
+                <para>Description</para>
+              </entry>
+            </row>
+          </tableHeader>
+
+          <!-- BUILDLet.UnitTest.Utilities -->
+          <row>
+            <entry>
+              <para>
+                <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities</codeEntityReference>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <!-- Namespace Summaries -->
+                <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities</codeEntityReference>
+                名前空間には、単体テスト用ユーティリティー クラスが含まれます。
+              </para>
+            </entry>
+          </row>
+
+          <!-- BUILDLet.UnitTest.Utilities.Extensions -->
+          <row>
+            <entry>
+              <para>
+                <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities.Extensions</codeEntityReference>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <!-- Namespace Summaries -->
+                <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities.Extensions</codeEntityReference>
+                名前空間には、<codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities</codeEntityReference>
+                名前空間に含まれる単体テスト用ユーティリティー クラスの拡張メソッドが含まれます。
+              </para>
+            </entry>
+          </row>
+
+        </table>
+
+      </content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="66de8ecc-dbb4-4717-9284-80f15ee5ad5a" />
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>

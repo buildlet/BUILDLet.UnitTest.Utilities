@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="f4a87542-eab7-4154-9ee3-2b0ce1578ba4" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>Version 1.0.2.0 was released on November 30, 2019.
+			</para>
+		</introduction>
+
+		<section>
+			<title>Changes in This Release</title>
+			<content>
+
+				<list class="bullet">
+					<listItem>
+						<para>Help Documentation was added.</para>
+          </listItem>
+          
+          <listItem>
+            <para>
+              Properties of <codeEntityReference qualifyHint="false">P:BUILDLet.UnitTest.Utilities.TestParameter.Expected</codeEntityReference> and
+              <codeEntityReference qualifyHint="false">P:BUILDLet.UnitTest.Utilities.TestParameter.Actual</codeEntityReference> were added to
+              <codeEntityReference qualifyHint="true">T:BUILDLet.UnitTest.Utilities.TestParameter</codeEntityReference> class.
+            </para>
+            <para>
+              As a result of this, signature of the method
+              <codeEntityReference qualifyHint="true" autoUpgrade="true">M:BUILDLet.UnitTest.Utilities.TestParameter.Print(System.Boolean,System.Boolean)</codeEntityReference> and
+              <codeEntityReference qualifyHint="true" autoUpgrade="true">M:BUILDLet.UnitTest.Utilities.Extensions.TestParameterExtensions.Assert(BUILDLet.UnitTest.Utilities.TestParameter,System.Boolean,System.Boolean)</codeEntityReference> was changed.
+            </para>
+          </listItem>
+        </list>
+
+			</content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="66de8ecc-dbb4-4717-9284-80f15ee5ad5a" />
+		</relatedTopics>
+
+	</developerConceptualDocument>
+</topic>
