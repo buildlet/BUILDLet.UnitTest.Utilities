@@ -2,7 +2,9 @@
 <topic id="66de8ecc-dbb4-4717-9284-80f15ee5ad5a" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>The topics in this section describe the various changes made to the <legacyBold>BUILDLet Unit Test Utility</legacyBold> over the life of the project.</para>
+			<para>
+        The topics in this section describe the various changes made to the <application>BUILDLet Unit Test Utility</application> over the life of the project.
+      </para>
 		</introduction>
 
 		<section>
@@ -36,6 +38,20 @@
           <listItem>
             <para>
               <link xlink:href="5ef10072-479a-45df-958c-a3bbfd2d39d7" />
+            </para>
+          </listItem>
+
+          <!-- Version 1.0.4.0 -->
+          <listItem>
+            <para>
+              <link xlink:href="bd10ed19-5e0d-462f-a4fe-ad98d6ef56dd" />
+            </para>
+          </listItem>
+
+          <!-- Version 1.1.0.0 -->
+          <listItem>
+            <para>
+              <link xlink:href="6efae346-67f1-42e9-bc4a-bca3b52d514f" />
             </para>
           </listItem>
 

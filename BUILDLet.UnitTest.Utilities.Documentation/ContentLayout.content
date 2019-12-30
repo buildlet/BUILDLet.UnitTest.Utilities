@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics>
-  <Topic id="dd2e80a9-0ae2-4a43-bece-2e4dc1de28df" visible="True" isDefault="true" title="About this document" tocTitle="About">
+  <Topic id="dd2e80a9-0ae2-4a43-bece-2e4dc1de28df" visible="True" isDefault="true" title="About This Document">
     <HelpKeywords>
       <HelpKeyword index="K" term="About" />
     </HelpKeywords>
@@ -24,9 +24,19 @@
         <HelpKeyword index="K" term="version, 1.0.2.0" />
       </HelpKeywords>
     </Topic>
-    <Topic id="5ef10072-479a-45df-958c-a3bbfd2d39d7" visible="True" isSelected="true" title="Version 1.0.3.0">
+    <Topic id="5ef10072-479a-45df-958c-a3bbfd2d39d7" visible="True" title="Version 1.0.3.0">
       <HelpKeywords>
         <HelpKeyword index="K" term="version, 1.0.3.0" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="bd10ed19-5e0d-462f-a4fe-ad98d6ef56dd" visible="True" title="Version 1.0.4.0">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="version, 1.0.4.0" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="6efae346-67f1-42e9-bc4a-bca3b52d514f" visible="True" isSelected="true" title="Version 1.1.0.0">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="version, 1.1.0.0" />
       </HelpKeywords>
     </Topic>
   </Topic>

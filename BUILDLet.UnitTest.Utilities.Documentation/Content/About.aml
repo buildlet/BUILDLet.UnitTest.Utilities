@@ -3,7 +3,8 @@
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
 			<para>
-        This is Help Documentation of <application>BUILDLet Unit Test Utility</application>.
+        This is Help Documentation of <application>BUILDLet Unit Test Utility for .NET Core</application>
+        (including <application>BUILDLet Class Library (Unit Test) for .NET Standard</application>).
       </para>
 		</introduction>
 
@@ -26,6 +27,22 @@
             </row>
           </tableHeader>
 
+          <!-- BUILDLet.Standard.UnitTest -->
+          <row>
+            <entry>
+              <para>
+                <codeEntityReference qualifyHint="true">N:BUILDLet.Standard.UnitTest</codeEntityReference>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <!-- Namespace Summaries -->
+                <codeEntityReference qualifyHint="true">N:BUILDLet.Standard.UnitTest</codeEntityReference>
+                名前空間には、単体テスト用のユーティリティー クラスが含まれます。
+              </para>
+            </entry>
+          </row>
+
           <!-- BUILDLet.UnitTest.Utilities -->
           <row>
             <entry>
@@ -37,24 +54,10 @@
               <para>
                 <!-- Namespace Summaries -->
                 <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities</codeEntityReference>
-                名前空間には、単体テスト用ユーティリティー クラスが含まれます。
-              </para>
-            </entry>
-          </row>
+                名前空間には、
+                <codeEntityReference qualifyHint="true">N:BUILDLet.Standard.UnitTest</codeEntityReference>
+                名前空間に含まれる単体テスト用ユーティリティー クラスを .NET Core プラットフォームでサポートされるテスト フレームワークで使用するための継承クラスが含まれます。
 
-          <!-- BUILDLet.UnitTest.Utilities.Extensions -->
-          <row>
-            <entry>
-              <para>
-                <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities.Extensions</codeEntityReference>
-              </para>
-            </entry>
-            <entry>
-              <para>
-                <!-- Namespace Summaries -->
-                <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities.Extensions</codeEntityReference>
-                名前空間には、<codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities</codeEntityReference>
-                名前空間に含まれる単体テスト用ユーティリティー クラスの拡張メソッドが含まれます。
               </para>
             </entry>
           </row>

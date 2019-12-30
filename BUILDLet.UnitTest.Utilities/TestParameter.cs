@@ -1,4 +1,4 @@
-ï»¿/***************************************************************************************************
+/***************************************************************************************************
 The MIT License (MIT)
 
 Copyright 2019 Daiki Sakamoto
@@ -24,62 +24,61 @@ using System;
 namespace BUILDLet.UnitTest.Utilities
 {
     /// <summary>
-    /// å˜ä½“ãƒ†ã‚¹ãƒˆã§ä½¿ç”¨ã™ã‚‹ãŸã‚ã®ãƒ†ã‚¹ãƒˆ ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚’å®Ÿè£…ã™ã‚‹ãŸã‚ã®æŠ½è±¡ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
+    /// .NET Core ƒvƒ‰ƒbƒgƒtƒH[ƒ€‚Å’P‘ÌƒeƒXƒg‚ğs‚¤ê‡‚Ég—p‚·‚éƒeƒXƒg ƒpƒ‰ƒ[ƒ^[‚ğÀ‘•‚·‚é‚½‚ß‚Ì’ŠÛƒNƒ‰ƒX‚Å‚·B
     /// </summary>
-    public abstract class TestParameter
+    /// <typeparam name="T">
+    /// ƒeƒXƒg‚ÌŠú‘Ò’l (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Expected"/>) ‚¨‚æ‚Ñ
+    /// ÀÛ‚ÌƒeƒXƒgŒ‹‰Ê (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Actual"/>) ‚ÌŒ^‚ğw’è‚µ‚Ü‚·B
+    /// </typeparam>
+    public abstract class TestParameter<T> : BUILDLet.Standard.UnitTest.TestParameter<T>
     {
         /// <summary>
-        /// æœŸå¾…å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
-        /// </summary>
-        /// <remarks>
-        /// ç¶™æ‰¿å…ˆã®ã‚¯ãƒ©ã‚¹ã§ã€æœŸå¾…å€¤ã¨ãªã‚‹ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã‚’è¿”ã™ã‚ˆã†ã«å®Ÿè£…ã—ã¦ãã ã•ã„ã€‚
-        /// </remarks>
-        public abstract object Expected { get; }
-
-
-        /// <summary>
-        /// å®Ÿéš›ã®ãƒ†ã‚¹ãƒˆçµæœã‚’è¨­å®šã¾ãŸã¯å–å¾—ã—ã¾ã™ã€‚
-        /// </summary>
-        public object Actual { get; set; }
-
-
-        /// <summary>
-        /// å½“è©²ãƒ†ã‚¹ãƒˆ ã‚±ãƒ¼ã‚¹ã‚’è¡¨ç¾ã™ã‚‹ã®ã«é©å½“ãªã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã‚’æŒ‡å®šã¾ãŸã¯å–å¾—ã—ã¾ã™ã€‚
-        /// </summary>
-        public string Keyword { get; set; } = null;
-
-
-        /// <summary>
-        /// ã‚³ãƒ³ã‚½ãƒ¼ãƒ« (æ¨™æº–å‡ºåŠ›) ã«ã€ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ (<see cref="TestParameter.Keyword"/>)ã€
-        /// æœŸå¾…å€¤ (<see cref="TestParameter.Expected"/>) ãŠã‚ˆã³ã€å®Ÿéš›ã®ãƒ†ã‚¹ãƒˆçµæœ (<see cref="TestParameter.Actual"/>) ã‚’å‡ºåŠ›ã—ã¾ã™ã€‚
+        /// ƒeƒXƒg‚ÌŠú‘Ò’l (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Expected"/>) ‚Æ
+        /// ÀÛ‚ÌƒeƒXƒgŒ‹‰Ê (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}"/>) ‚ª“™‚µ‚¢‚©‚Ç‚¤‚©‚ğƒeƒXƒg‚µ‚Ü‚·B
+        /// ‚Ü‚½AƒRƒ“ƒ\[ƒ‹ (•W€o—Í) ‚ÉA‚»‚ê‚ç‚Ì’l‚ğo—Í‚µ‚Ü‚·B
         /// </summary>
         /// <param name="noBlankLine">
-        /// å‡ºåŠ›å‰ã«æ”¹è¡Œã—ãªã„å ´åˆã« true ã‚’æŒ‡å®šã—ã¾ã™ã€‚
-        /// æ—¢å®šã¯ false ã§ã™ã€‚
+        /// ƒRƒ“ƒ\[ƒ‹ (•W€o—Í) ‚Ö‚Ìo—Í‚É‘Î‚µ‚ÄAæ“ª‚É‰üs‚ğ‚µ‚È‚¢ê‡‚É true ‚ğw’è‚µ‚Ü‚·B
+        /// Šù’è‚Í true ‚Å‚·B
         /// </param>
         /// <param name="printKeyword">
-        /// ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ (<see cref="TestParameter.Keyword"/>) ã‚’å‡ºåŠ›ã—ãªã„å ´åˆã« false ã‚’æŒ‡å®šã—ã¾ã™ã€‚
-        /// æ—¢å®šã¯ true ã§ã™ã€‚
+        /// ƒL[ƒ[ƒh (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Keyword"/>) ‚ğo—Í‚µ‚È‚¢ê‡‚É false ‚ğw’è‚µ‚Ü‚·B
+        /// Šù’è‚Í true ‚Å‚·B
         /// </param>
-        public void Print(bool noBlankLine = false, bool printKeyword = true)
+        public void Assert(bool noBlankLine = true, bool printKeyword = true)
         {
-            // Blank Line
-            if (!noBlankLine)
+            if (!this.IsMultipleParameter)
             {
-                Console.WriteLine();
-            }
+                // Output:
+                this.Print(noBlankLine, printKeyword);
 
-            // Keyword
-            if (printKeyword && !string.IsNullOrWhiteSpace(this.Keyword))
+                // Assertion:
+                if (this.Expected != null || this.Actual != null)
+                {
+                    Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(this.Expected, this.Actual);
+                }
+            }
+            else
             {
-                Console.WriteLine($"[{this.Keyword}]");
+                for (int i = 0; i < this.GetExpectedAsArray().Length; i++)
+                {
+                    // Output:
+                    if (i == 0)
+                    {
+                        this.Print(noBlankLine, printKeyword);
+                    }
+                    else
+                    {
+                        this.Print(noBlankLine:false, printKeyword:false, i);
+                    }
+
+                    // Assertion:
+                    if (this.GetExpectedAsArray()[i] != null || this.GetActualAsArray()[i] != null)
+                    {
+                        Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(this.GetExpectedAsArray()[i], this.GetActualAsArray()[i]);
+                    }
+                }
             }
-
-            // Expected
-            Console.WriteLine("Expected\t= " + (this.Expected is null ? "null" : $"\"{this.Expected}\""));
-
-            // Actual
-            Console.WriteLine("Actual\t= " + (this.Actual is null ? "null" : $"\"{this.Actual}\""));
         }
     }
 }

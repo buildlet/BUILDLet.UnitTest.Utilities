@@ -2,22 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-
+    <RootNamespace>BUILDLet.UnitTest.Utilities.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
-
-    <Version>1.0.3</Version>
-
+    <Version>1.1.0</Version>
     <Authors>Daiki Sakamoto</Authors>
-
     <Company>BUILDLet</Company>
-
-    <Description>Unit Tests for BUILDLet UnitTest Utility</Description>
-
+    <Description>Unit Tests for BUILDLet.UnitTest.UtilitiesTests</Description>
     <Copyright>© 2019 Daiki Sakamoto</Copyright>
-
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-
-    <AssemblyVersion>1.0.33.0</AssemblyVersion>
+    <PackageProjectUrl>https://github.com/buildlet/BUILDLet.UnitTest.Utilities</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BUILDLet.UnitTest.Utilities.Extensions\BUILDLet.UnitTest.Utilities.Extensions.csproj" />
     <ProjectReference Include="..\BUILDLet.UnitTest.Utilities\BUILDLet.UnitTest.Utilities.csproj" />
   </ItemGroup>
 
