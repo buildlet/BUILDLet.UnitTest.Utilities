@@ -19,13 +19,13 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***************************************************************************************************/
 
-using System.Runtime.CompilerServices;  // for CompilerGeneratedAttribute
-
 namespace BUILDLet.UnitTest.Utilities
 {
     /// <summary>
-    /// <see cref="BUILDLet.UnitTest.Utilities"/> 名前空間には、単体テスト用ユーティリティー クラスが含まれます。
+    /// <see cref="BUILDLet.UnitTest.Utilities"/> 名前空間には、
+    /// <see cref="BUILDLet.Standard.UnitTest"/> 名前空間に含まれる単体テスト用ユーティリティー クラスを
+    /// .NET Core プラットフォームでサポートされるテスト フレームワークで使用するための継承クラスが含まれます。
     /// </summary>
-    [CompilerGenerated()]
+    [System.Runtime.CompilerServices.CompilerGenerated()]
     public class NamespaceDoc { }
 }

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="6efae346-67f1-42e9-bc4a-bca3b52d514f" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>Version 1.1.0.0 was released on December 29, 2019.
+			</para>
+		</introduction>
+
+		<section>
+			<title>Changes in This Release</title>
+			<content>
+
+				<list class="bullet">
+          <listItem>
+            <para>
+              <codeInline>BUILDLet.UnitTest.Utilities</codeInline> namespace was changed into
+              <codeEntityReference qualifyHint="true">N:BUILDLet.Standard.UnitTest</codeEntityReference>.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              <codeInline>BUILDLet.UnitTest.Utilities.Extensions</codeInline> namespace was changed into
+              <codeEntityReference qualifyHint="true">N:BUILDLet.UnitTest.Utilities</codeEntityReference>.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              Abstract class of <codeInline>BUILDLet.UnitTest.Utilities.TestParameter</codeInline> was changed into abstract generic class of
+              <codeEntityReference qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              Static class of <codeInline>BUILDLet.UnitTest.Utilities.Extensions.TestParameterExtensions</codeInline> was changed into abstract generic class of
+              <codeEntityReference qualifyHint="true">T:BUILDLet.UnitTest.Utilities.TestParameter`1</codeEntityReference>.
+            </para>
+          </listItem>
+
+          <listItem>
+						<para>
+              Array of
+              <codeEntityReference qualifyHint="true">P:BUILDLet.Standard.UnitTest.TestParameter`1.Expected</codeEntityReference>
+              property and
+              <codeEntityReference qualifyHint="true">P:BUILDLet.Standard.UnitTest.TestParameter`1.Actual</codeEntityReference>
+              property is supported.
+            </para>
+          </listItem>
+          
+          <listItem>
+            <para>
+              <codeEntityReference qualifyHint="true">P:BUILDLet.Standard.UnitTest.TestParameter`1.IsMultipleParameter</codeEntityReference> is added.
+            </para>
+          </listItem>
+        </list>
+
+      </content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="66de8ecc-dbb4-4717-9284-80f15ee5ad5a" />
+		</relatedTopics>
+
+	</developerConceptualDocument>
+</topic>

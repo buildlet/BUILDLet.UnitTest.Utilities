@@ -35,7 +35,7 @@
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <HelpTitle>BUILDLet Unit Test Utility</HelpTitle>
-    <HelpFileVersion>1.0.3.0</HelpFileVersion>
+    <HelpFileVersion>1.1.0.0</HelpFileVersion>
     <NamingMethod>Guid</NamingMethod>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceContainer>False</RootNamespaceContainer>
@@ -44,21 +44,13 @@
     <Preliminary>False</Preliminary>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\BUILDLet.UnitTest.Utilities.Extensions\BUILDLet.UnitTest.Utilities.Extensions.csproj" />
+      <DocumentationSource sourceFile="..\BUILDLet.Standard.UnitTest\BUILDLet.Standard.UnitTest.csproj" />
       <DocumentationSource sourceFile="..\BUILDLet.UnitTest.Utilities\BUILDLet.UnitTest.Utilities.csproj" />
     </DocumentationSources>
-    <ProjectSummary>
-    </ProjectSummary>
-    <NamespaceSummaries>
-      <NamespaceSummaryItem name="(global)" isDocumented="False" />
-      <NamespaceSummaryItem name="BUILDLet.UnitTest.Utilities" isDocumented="True" />
-    </NamespaceSummaries>
-    <FooterText>
-    </FooterText>
-    <CopyrightText>
-    </CopyrightText>
   </PropertyGroup>
-  <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform the build.  The others are optional common platform types that may appear. -->
+  <!-- There are no properties for these groups.
+       AnyCPU needs to appear in order for Visual Studio to perform the build.
+       The others are optional common platform types that may appear. -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -82,13 +74,15 @@
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\VersionHistory\v1.1.0.0.aml" />
+    <None Include="Content\VersionHistory\v1.0.4.0.aml" />
     <None Include="Content\VersionHistory\v1.0.3.0.aml" />
-    <None Include="Content\About.aml" />
     <None Include="Content\VersionHistory\v1.0.2.0.aml" />
     <None Include="Content\VersionHistory\v1.0.1.0.aml" />
-    <None Include="Content\VersionHistory\v0.0.0.0.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
+    <None Include="Content\VersionHistory\v0.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
+    <None Include="Content\About.aml" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />

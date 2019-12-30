@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="f4a87542-eab7-4154-9ee3-2b0ce1578ba4" revisionNumber="1">
+<topic id="bd10ed19-5e0d-462f-a4fe-ad98d6ef56dd" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>Version 1.0.2.0 was released on November 30, 2019.
+			<para>Version 1.0.4.0 was released on December 14, 2019.
 			</para>
 		</introduction>
 
@@ -12,24 +12,12 @@
 
 				<list class="bullet">
 					<listItem>
-						<para>Help Documentation was added.</para>
-          </listItem>
-          
-          <listItem>
-            <para>
-              Properties of
-              <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.TestParameter.Expected">P:BUILDLet.Standard.UnitTest.TestParameter`1.Expected</codeEntityReference>
-              and
-              <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.TestParameter.Actual">P:BUILDLet.Standard.UnitTest.TestParameter`1.Actual</codeEntityReference>
-              were added to
-              <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.TestParameter">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
-              class.
-              <lineBreak/>
-              As a result of this, signature of method
+						<para>
+              Default value of <codeInline>noBlankLine</codeInline> parameter of method
               <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.TestParameter.Print">M:BUILDLet.Standard.UnitTest.TestParameter`1.Print(System.Boolean,System.Boolean,System.Int32)</codeEntityReference>
               and
               <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.Extensions.TestParameterExtensions.Assert">M:BUILDLet.UnitTest.Utilities.TestParameter`1.Assert(System.Boolean,System.Boolean)</codeEntityReference>
-              was changed.
+              was changed from <codeInline>false</codeInline> into <codeInline>true</codeInline>.
             </para>
           </listItem>
         </list>
