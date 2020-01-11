@@ -27,119 +27,193 @@ namespace BUILDLet.Standard.UnitTest
     /// 単体テストで使用するテスト パラメーターを実装するための抽象クラスです。
     /// </summary>
     /// <typeparam name="T">
-    /// テストの期待値 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Expected"/>) および
-    /// 実際のテスト結果 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Actual"/>) の型を指定します。
+    /// テストの期待値 (<see cref="TestParameter{T}.Expected"/>) および
+    /// 実際のテスト結果 (<see cref="TestParameter{T}.Actual"/>) の型を指定します。
     /// </typeparam>
     public abstract class TestParameter<T>
     {
         // Innver Value(s):
-        private object[] expectedArray = null;
-        private object[] actualArray = null;
+        private T expected;
+        private T actual;
+        private bool expected_is_initialized = false;
+        private bool actual_is_initialized = false;
 
 
         /// <summary>
-        /// <see cref="TestParameter{T}.Expected"/> および <see cref="TestParameter{T}.Actual"/> が配列の場合に true が設定されます。
-        /// </summary>
-        public bool IsMultipleParameter
-        {
-            get
-            {
-                if (typeof(T).IsArray)
-                {
-                    if (this.Expected == null || this.Actual == null)
-                    {
-                        throw new InvalidOperationException();
-                    }
-                    
-                    if ((this.Expected as Array).Length != (this.Actual as Array).Length)
-                    {
-                        throw new InvalidOperationException();
-                    }
-
-
-                    if (this.expectedArray is null)
-                    {
-                        this.expectedArray = new object[(this.Expected as Array).Length];
-                        (this.Expected as Array).CopyTo(this.expectedArray, 0);
-                    }
-
-                    if (this.actualArray is null)
-                    {
-                        this.actualArray = new object[(this.Actual as Array).Length];
-                        (this.Actual as Array).CopyTo(this.actualArray, 0);
-                    }
-
-
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 期待値を取得します。
-        /// </summary>
-        /// <remarks>
-        /// 継承先のクラスで、期待値となるメンバー変数を返すように実装してください。
-        /// </remarks>
-        public abstract T Expected { get; }
-
-
-        /// <summary>
-        /// 実際のテスト結果を設定または取得します。
-        /// </summary>
-        public T Actual { get; set; }
-
-
-        /// <summary>
-        /// 当該テスト ケースを表現するのに適当なキーワードを指定または取得します。
+        /// テスト ケースを表現するのに適当なキーワードを取得または設定します。
         /// </summary>
         public string Keyword { get; set; } = null;
 
 
         /// <summary>
-        /// <see cref="TestParameter{T}.Expected"/> が配列の場合
-        /// (<see cref="TestParameter{T}.IsMultipleParameter"/> が true の場合) に、
-        /// <see cref="TestParameter{T}.Expected"/> を <see cref="object"/> の配列として取得します。
+        /// テストの期待値を取得または設定します。
         /// </summary>
-        /// <returns>
-        /// <see cref="TestParameter{T}.Expected"/> を <see cref="object"/> の配列として取得します。
-        /// </returns>
-        protected object[] GetExpectedAsArray() => this.expectedArray;
+        /// <exception cref="InvalidOperationException">
+        /// <see cref="Expected"/> が初期化されていません。
+        /// </exception>
+        /// <remarks>
+        /// <see cref="Arrange(out T)" autoUpgrade="true"/> メソッドを実行すると、このプロパティに値が設定されます。
+        /// </remarks>
+        public T Expected
+        {
+            get
+            {
+                // Validation:
+                if (!this.expected_is_initialized) { throw new InvalidOperationException(); }
+
+                // RETURN
+                return this.expected;
+            }
+            protected set
+            {
+                // SET value
+                this.expected = value;
+
+                // SET Initialized Flag
+                this.expected_is_initialized = true;
+            }
+        }
 
 
         /// <summary>
-        /// <see cref="TestParameter{T}.Actual"/> が配列の場合
-        /// (<see cref="TestParameter{T}.IsMultipleParameter"/> が true の場合) に、
-        /// <see cref="TestParameter{T}.Actual"/> を <see cref="object"/> の配列として取得します。
+        /// 実際のテスト結果を取得または設定します。
         /// </summary>
-        /// <returns>
-        /// <see cref="TestParameter{T}.Actual"/> を <see cref="object"/> の配列として取得します。
-        /// </returns>
-        protected object[] GetActualAsArray() => this.actualArray;
+        /// <exception cref="InvalidOperationException">
+        /// <see cref="Actual"/> が初期化されていません。
+        /// </exception>
+        /// <remarks>
+        /// <see cref="Act(out T)" autoUpgrade="true"/> メソッドを実行すると、このプロパティに値が設定されます。
+        /// </remarks>
+        public T Actual
+        {
+            get
+            {
+                // Validation:
+                if (!this.actual_is_initialized) { throw new InvalidOperationException(); }
+
+                // RETURN
+                return this.actual;
+            }
+            protected set
+            {
+                // SET value
+                this.actual = value;
+
+                // SET Initialized Flag
+                this.actual_is_initialized = true;
+            }
+        }
+
 
 
         /// <summary>
-        /// コンソール (標準出力) に、キーワード (<see cref="TestParameter{T}.Keyword"/>)、
-        /// 期待値 (<see cref="TestParameter{T}.Expected"/>) および、実際のテスト結果 (<see cref="TestParameter{T}.Actual"/>) を出力します。
+        /// テストの事前準備 (Arrange) で実行される処理を実装します。
+        /// </summary>
+        /// <param name="expected">
+        /// テストの期待値。
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// <paramref name="expected"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
+        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
+        /// (<see cref="NotImplementedException"/> がスローされます。)
+        /// </para>
+        /// <para>
+        /// <paramref name="expected"/> に格納した値は <see cref="TestParameter{T}.Expected"/> から参照できます。
+        /// </para>
+        /// </remarks>
+        public virtual void Arrange(out T expected) { throw new NotImplementedException(); }
+
+        /// <summary>
+        /// 繰り返しテストのためのテストの事前準備 (Arrange) で実行される処理を実装します。
+        /// </summary>
+        /// <param name="expected">
+        /// テストの期待値。
+        /// </param>
+        /// <param name="index">
+        /// 繰り返し処理のためのインデックス。
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// <paramref name="expected"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
+        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
+        /// (<see cref="NotImplementedException"/> がスローされます。)
+        /// </para>
+        /// <para>
+        /// <paramref name="expected"/> に格納した値は <see cref="TestParameter{T}.Expected"/> から参照できます。
+        /// </para>
+        /// <para>
+        /// 繰り返してテストを実行する場合は、<see cref="Arrange(out T)"/> ではなく、このメソッドが実行されます。
+        /// </para>
+        /// </remarks>
+        public virtual void Arrange(out T expected, int index) { throw new NotImplementedException(); }
+
+
+        /// <summary>
+        /// テストの実行 (Act) で実行される処理を実装します。
+        /// </summary>
+        /// <param name="actual">
+        /// テスト結果。
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// <paramref name="actual"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
+        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
+        /// (<see cref="NotImplementedException"/> がスローされます。)
+        /// </para>
+        /// <para>
+        /// <paramref name="actual"/> に格納した値は <see cref="TestParameter{T}.Actual"/> から参照できます。
+        /// </para>
+        /// </remarks>
+        public virtual void Act(out T actual) { throw new NotImplementedException(); }
+
+        /// <summary>
+        /// 繰り返しテストのためのテストの実行 (Act) で実行される処理を実装します。
+        /// </summary>
+        /// <param name="actual">
+        /// テスト結果。
+        /// </param>
+        /// <param name="index">
+        /// 繰り返し処理のためのインデックス。
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// <paramref name="actual"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
+        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
+        /// (<see cref="NotImplementedException"/> がスローされます。)
+        /// </para>
+        /// <para>
+        /// <paramref name="actual"/> に格納した値は <see cref="TestParameter{T}.Actual"/> から参照できます。
+        /// </para>
+        /// <para>
+        /// 繰り返してテストを実行する場合は、<see cref="Act(out T)"/> ではなく、このメソッドが実行されます。
+        /// </para>
+        /// </remarks>
+        public virtual void Act(out T actual, int index) { throw new NotImplementedException(); }
+
+
+        /// <summary>
+        /// コンソール (標準出力) に、キーワード (<see cref="TestParameter{T}.Keyword"/>) を出力します。
         /// </summary>
         /// <param name="noBlankLine">
-        /// 出力前に改行しない場合に true を指定します。
-        /// 既定は true です。
+        /// 出力前に改行しない場合に <c>true</c> を指定します。
         /// </param>
-        /// <param name="printKeyword">
-        /// キーワード (<see cref="TestParameter{T}.Keyword"/>) を出力しない場合に false を指定します。
-        /// 既定は true です。
-        /// </param>
-        /// <param name="count">
-        /// 期待値 (<see cref="TestParameter{T}.Expected"/>) および、実際のテスト結果 (<see cref="TestParameter{T}.Actual"/>) が配列の場合
-        /// (<see cref="TestParameter{T}.IsMultipleParameter"/> が true の場合) に、出力するの配列のインデックス番号を指定します。
-        /// 配列でない場合は無視されます。
-        /// </param>
-        public void Print(bool noBlankLine = true, bool printKeyword = true, int count = 0)
+        /// <remarks>
+        /// キーワード (<see cref="TestParameter{T}.Keyword"/>) が、空文字または <c>null</c> の場合は出力されません。
+        /// </remarks>
+        protected void PrintKeyword(bool noBlankLine = true)
         {
             // Blank Line
             if (!noBlankLine)
@@ -148,28 +222,37 @@ namespace BUILDLet.Standard.UnitTest
             }
 
             // Keyword
-            if (printKeyword && !string.IsNullOrWhiteSpace(this.Keyword))
+            if (!string.IsNullOrWhiteSpace(this.Keyword))
             {
                 Console.WriteLine($"[{this.Keyword}]");
             }
+        }
 
-            // for Multi-Parameter
-            if (!this.IsMultipleParameter)
-            {
-                // Expected
-                Console.WriteLine("Expected\t= " + (this.Expected == null ? "null" : $"\"{this.Expected}\""));
 
-                // Actual
-                Console.WriteLine("Actual\t= " + (this.Actual == null ? "null" : $"\"{this.Actual}\""));
-            }
-            else
-            {
-                // Expected
-                Console.WriteLine($"Expected({count}) = " + (this.expectedArray[count] == null ? "null" : $"\"{expectedArray[count]}\""));
-
-                // Actual
-                Console.WriteLine($"Actual({count}) = " + (this.actualArray[count] == null ? "null" : $"\"{actualArray[count]}\""));
-            }
+        /// <summary>
+        /// コンソール (標準出力) に、アイテムの名前と値を出力します。
+        /// </summary>
+        /// <param name="name">
+        /// アイテムの名前。
+        /// </param>
+        /// <param name="value">
+        /// アイテムの値。
+        /// </param>
+        /// <param name="index">
+        /// 複数回実行する場合のインデックス。<br/>
+        /// <c>0</c> より小さい値が指定されると、インデックスは出力されません。
+        /// </param>
+        /// <remarks>
+        /// 出力の書式は
+        /// <c><paramref name="name"/> = <paramref name="value"/></c>
+        /// または
+        /// <c><paramref name="name"/> (<paramref name="index"/>) = <paramref name="value"/></c>
+        /// です。
+        /// </remarks>
+        protected void PrintItem(string name, T value, int index = -1)
+        {
+            Console.WriteLine($"{name}" + (index < 0 ? "" : $" ({index})") + "\t= "
+                + (value == null ? "null" : (value is string ? $"\"{value}\"" : value.ToString())));
         }
     }
 }
