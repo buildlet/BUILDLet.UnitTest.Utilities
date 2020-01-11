@@ -16,7 +16,7 @@
           <!-- Version 1.0.0.0 -->
           <listItem>
             <para>
-              <link xlink:href="3d8c932b-9843-4261-81b8-8e753be26cb7" />
+              <link xlink:href="565694f9-fb18-482d-a80b-3622c47a641d" />
             </para>
           </listItem>
 
@@ -52,6 +52,13 @@
           <listItem>
             <para>
               <link xlink:href="6efae346-67f1-42e9-bc4a-bca3b52d514f" />
+            </para>
+          </listItem>
+
+          <!-- Version 1.2.0.0 -->
+          <listItem>
+            <para>
+              <link xlink:href="97012514-55b2-4110-95c7-574349e0edac" />
             </para>
           </listItem>
 

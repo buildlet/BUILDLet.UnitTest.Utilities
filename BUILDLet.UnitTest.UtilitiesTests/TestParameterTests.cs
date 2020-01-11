@@ -30,28 +30,156 @@ namespace BUILDLet.UnitTest.Utilities.Tests
     [TestClass()]
     public class TestParameterTests
     {
-        public class IntTestParameter : TestParameter<int>
+        public class ActNotImplementationTestParameter : TestParameter<string>
         {
-            public int Value;
-            public override int Expected => this.Value;
+            public override void Arrange(out string expected) { expected = null; }
+        };
+
+        public class ActsNotImplementationTestParameter : TestParameter<string>
+        {
+            public override void Arrange(out string expected, int index) { expected = null; }
+        };
+
+        public class ArrangeNotImplementationTestParameter : TestParameter<string>
+        {
+            public override void Act(out string actual) { actual = null; }
+        };
+
+        public class ArrangesNotImplementationTestParameter : TestParameter<string>
+        {
+            public override void Act(out string actual, int index){ actual = null; }
+        };
+
+
+        public abstract class TestParameterBase<T> : TestParameter<T>
+        {
+            public T Value1;
+            public T Value2;
+
+            public override void Arrange(out T expected)
+            {
+                // SET Expected
+                expected = this.Value1;
+            }
+
+            public override void Act(out T actual)
+            {
+                // GET Actual
+                actual = this.Value2;
+            }
         }
 
-        public class StringTestParameter : TestParameter<string>
+        public class IntTestParameter : TestParameterBase<int> { }
+        public class StringTestParameter : TestParameterBase<string> { }
+
+
+        public abstract class ArrayTestParameterBase<T> : TestParameter<T>
         {
-            public string Value;
-            public override string Expected => this.Value;
+            public T[] Value1;
+            public T[] Value2;
+
+            public override void Arrange(out T expected, int index)
+            {
+                // SET Expected
+                expected = this.Value1[index];
+            }
+
+            public override void Act(out T actual, int index)
+            {
+                // GET Actual
+                actual = this.Value2[index];
+            }
         }
 
-        public class IntArrayTestParameter : TestParameter<int[]>
+        public class IntArrayTestParameter : ArrayTestParameterBase<int> { }
+        public class StringArrayTestParameter : ArrayTestParameterBase<string> { }
+
+
+
+        [TestMethod()]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void ArrangeNotImplementationExceptionTest()
         {
-            public int[] Value;
-            public override int[] Expected => this.Value;
+            // SET Parameter
+            ArrangeNotImplementationTestParameter param = new ArrangeNotImplementationTestParameter
+            {
+                Keyword = nameof(ArrangeNotImplementationExceptionTest),
+            };
+
+            // ASSERT
+            param.Assert();
         }
 
-        public class StringArrayTestParameter : TestParameter<string[]>
+        [TestMethod()]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void ArrangesNotImplementationExceptionTest()
         {
-            public string[] Value;
-            public override string[] Expected => this.Value;
+            // SET Parameter
+            ArrangesNotImplementationTestParameter param = new ArrangesNotImplementationTestParameter
+            {
+                Keyword = nameof(ArrangesNotImplementationExceptionTest),
+            };
+
+            // ASSERT
+            param.Assert(count: 1);
+        }
+
+        [TestMethod()]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void ActNotImplementationExceptionTest()
+        {
+            // SET Parameter
+            ActNotImplementationTestParameter param = new ActNotImplementationTestParameter
+            {
+                Keyword = nameof(ActNotImplementationExceptionTest),
+            };
+
+            // ASSERT
+            param.Assert();
+        }
+
+        [TestMethod()]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void ActsNotImplementationExceptionTest()
+        {
+            // SET Parameter
+            ActsNotImplementationTestParameter param = new ActsNotImplementationTestParameter
+            {
+                Keyword = nameof(ActsNotImplementationExceptionTest),
+            };
+
+            // ASSERT
+            param.Assert(count: 1);
+        }
+
+
+
+        [TestMethod()]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ExpectedInvalidOperationExceptionTest()
+        {
+            // SET Parameter
+            IntTestParameter param = new IntTestParameter { };
+
+            // ASSERT
+            Console.WriteLine(param.Expected);
+        }
+
+        [TestMethod()]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ActualInvalidOperationExceptionTest()
+        {
+            // SET Parameter
+            IntTestParameter param = new IntTestParameter { };
+
+            // ASSERT
+            Console.WriteLine(param.Actual);
         }
 
 
@@ -62,15 +190,38 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [DataRow(null, null, DisplayName = "Expected = null, Actual = null")]
         public void IntAssertTest(int expected, int actual)
         {
+            // SET Parameter
             IntTestParameter param = new IntTestParameter
             {
                 Keyword = nameof(IntAssertTest),
-                Value = expected,
-                Actual = actual,
+                Value1 = expected,
+                Value2 = actual,
             };
 
+            // ASSERT
             param.Assert();
         }
+
+        [DataTestMethod()]
+        [DataRow(0, 1)]
+        [DataRow(null, 1, DisplayName = "Expected = null")]
+        [DataRow(1, null, DisplayName = "Actual = null")]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(AssertFailedException))]
+        public void IntAssertFailedExceptionTest(int expected, int actual)
+        {
+            // SET Parameter
+            IntTestParameter param = new IntTestParameter
+            {
+                Keyword = nameof(IntAssertFailedExceptionTest),
+                Value1 = expected,
+                Value2 = actual,
+            };
+
+            // ASSERT
+            param.Assert();
+        }
+
 
 
         [DataTestMethod()]
@@ -79,35 +230,17 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [DataRow(null, null, DisplayName = "Expected = Actual = null")]
         public void StringAssertTest(string expected, string actual)
         {
+            // SET Parameter
             StringTestParameter param = new StringTestParameter
             {
                 Keyword = nameof(StringAssertTest),
-                Value = expected,
-                Actual = actual,
+                Value1 = expected,
+                Value2 = actual,
             };
 
+            // ASSERT
             param.Assert();
         }
-
-
-        [DataTestMethod()]
-        [DataRow(0, 1)]
-        [DataRow(null, 1, DisplayName = "Expected = null")]
-        [DataRow(1, null, DisplayName = "Actual = null")]
-        [TestCategory("Exception Test")]
-        [ExpectedException(typeof(AssertFailedException))]
-        public void IntAssertFailedExceptionTest(int expected, int actual)
-        {
-            IntTestParameter param = new IntTestParameter
-            {
-                Keyword = nameof(IntAssertFailedExceptionTest),
-                Value = expected,
-                Actual = actual,
-            };
-
-            param.Assert();
-        }
-
 
         [DataTestMethod()]
         [DataRow("ABC", "XYZ")]
@@ -115,19 +248,22 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [DataRow("ABC", null, DisplayName = "Actual = null")]
         [DataRow("", "XYZ", DisplayName = "Expected = String.Empty")]
         [DataRow("ABC", "", DisplayName = "Actual = String.Empty")]
-        [TestCategory("Exception Test")]
+        [TestCategory("Exception")]
         [ExpectedException(typeof(AssertFailedException))]
         public void StringAssertFailedExceptionTest(string expected, string actual)
         {
+            // SET Parameter
             StringTestParameter param = new StringTestParameter
             {
                 Keyword = nameof(StringAssertFailedExceptionTest),
-                Value = expected,
-                Actual = actual,
+                Value1 = expected,
+                Value2 = actual,
             };
 
+            // ASSERT
             param.Assert();
         }
+
 
 
         [DataTestMethod()]
@@ -135,14 +271,34 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [DataRow(new int[] { 0, 1, 2 }, new int[] { 0, 1, 2 }, null)]
         public void IntArrayAssertTest(int[] expected, int[] actual, string keyword)
         {
+            // SET Parameter
             IntArrayTestParameter param = new IntArrayTestParameter
             {
                 Keyword = keyword,
-                Value = expected,
-                Actual = actual,
+                Value1 = expected,
+                Value2 = actual,
             };
 
-            param.Assert();
+            // ASSERT
+            param.Assert(count: param.Value1.Length);
+        }
+
+        [DataTestMethod()]
+        [DataRow(new int[] { 0, 1, 2 }, new int[] { 0, 1, 3 }, null)]
+        [TestCategory("Exception")]
+        [ExpectedException(typeof(AssertFailedException))]
+        public void IntArrayAssertFailedExceptionTest(int[] expected, int[] actual, string keyword)
+        {
+            // SET Parameter
+            IntArrayTestParameter param = new IntArrayTestParameter
+            {
+                Keyword = keyword,
+                Value1 = expected,
+                Value2 = actual,
+            };
+
+            // ASSERT
+            param.Assert(count: param.Value1.Length);
         }
 
 
@@ -151,48 +307,34 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [DataRow(new string[] { "ABC", "XYZ" }, new string[] { "ABC", "XYZ" }, null)]
         public void StringArrayAssertTest(string[] expected, string[] actual, string keyword)
         {
+            // SET Parameter
             StringArrayTestParameter param = new StringArrayTestParameter
             {
                 Keyword = keyword,
-                Value = expected,
-                Actual = actual,
+                Value1 = expected,
+                Value2 = actual,
             };
 
-            param.Assert();
+            // ASSERT
+            param.Assert(count: param.Value1.Length);
         }
-
-
-        [DataTestMethod()]
-        [DataRow(new int[] { 0, 1, 2 }, new int[] { 0, 1, 3 }, null)]
-        [TestCategory("Exception Test")]
-        [ExpectedException(typeof(AssertFailedException))]
-        public void IntArrayAssertFailedExceptionTest(int[] expected, int[] actual, string keyword)
-        {
-            IntArrayTestParameter param = new IntArrayTestParameter
-            {
-                Keyword = keyword,
-                Value = expected,
-                Actual = actual,
-            };
-
-            param.Assert();
-        }
-
 
         [DataTestMethod()]
         [DataRow(new string[] { "ABC", "XYZ" }, new string[] { "ABC", "XY" }, null)]
-        [TestCategory("Exception Test")]
+        [TestCategory("Exception")]
         [ExpectedException(typeof(AssertFailedException))]
         public void StringArrayAssertFailedExceptionTest(string[] expected, string[] actual, string keyword)
         {
+            // SET Parameter
             StringArrayTestParameter param = new StringArrayTestParameter
             {
                 Keyword = keyword,
-                Value = expected,
-                Actual = actual,
+                Value1 = expected,
+                Value2 = actual,
             };
 
-            param.Assert();
+            // ASSERT
+            param.Assert(count: param.Value1.Length);
         }
     }
 }
