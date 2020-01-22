@@ -20,112 +20,61 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 ***************************************************************************************************/
 
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BUILDLet.UnitTest.Utilities
 {
     /// <summary>
-    /// .NET Core プラットフォームで単体テストを行う場合に使用するテスト パラメーターを実装するための抽象クラスです。
+    /// .NET Core プラットフォームで単体テストを行う場合に使用するテスト パラメーターを実装します。
     /// </summary>
     /// <typeparam name="T">
     /// テストの期待値 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Expected"/>) および
-    /// 実際のテスト結果 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Actual"/>) の型を指定します。
+    /// 実際のテスト結果 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Actual"/>) の型。
     /// </typeparam>
-    public abstract class TestParameter<T> : BUILDLet.Standard.UnitTest.TestParameter<T>
+    public class TestParameter<T> : BUILDLet.Standard.UnitTest.TestParameter<T>
     {
         /// <summary>
-        /// テストの期待値 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Expected"/>) と
-        /// 実際のテスト結果 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Actual"/>) が等しいかどうかをテストします。<br/>
-        /// また、それらをコンソール (標準出力) に出力します。
+        /// テストの期待値 (<paramref name="expected"/>) と実際のテスト結果 (<paramref name="actual"/>) が等しいかどうかを検証します。
         /// </summary>
-        /// <param name="noBlankLine">
-        /// コンソール (標準出力) への出力に対して、先頭に改行をしない場合に <c>true</c> を指定します。
+        /// <param name="expected">
+        /// テストの期待値。
         /// </param>
-        /// <param name="printKeyword">
-        /// キーワード (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Keyword"/>) を出力しない場合に <c>false</c> を指定します。
+        /// <param name="actual">
+        /// 実際のテスト結果。
         /// </param>
-        /// <param name="count">
-        /// 1 回のパラメーターの処理に対して、繰り返してテストを実行する場合に、<c>1</c> 以上の繰り返し回数を指定します。
-        /// </param>
-        /// <param name="startIndex">
-        /// 1 回のパラメーターの処理に対して、繰り返してテストを実行する場合に、インデックスの開始番号を指定します。
-        /// </param>
-        /// <exception cref="NotImplementedException">
-        /// <see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Arrange(out T)" autoUpgrade="true"/> メソッド、あるいは
-        /// <see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Act(out T)" autoUpgrade="true"/> メソッドがオーバーライドされていない場合にスローされます。
+        /// <exception cref="AssertFailedException">
+        /// テストに失敗しました。
         /// </exception>
-        /// <remarks>
-        /// <para>
-        /// <paramref name="count"/> に <c>0</c> 以下が指定された場合は
-        /// <see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Act(out T)"/> および <see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Arrange(out T)"/>
-        /// が実行されます。<br/>
-        /// <paramref name="count"/> に <c>1</c> 以上が指定された場合は
-        /// <see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Act(out T, int)"/> および <see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Arrange(out T, int)"/>
-        /// が実行されます。
-        /// </para>
-        /// </remarks>
-        public void Assert(bool noBlankLine = true, bool printKeyword = true, int count = 0, int startIndex = 0)
-        {
-            // Print Keyword
-            if (printKeyword) { this.PrintKeyword(noBlankLine); }
-
-            var index = startIndex;
-            do
-            {
-                if (count < 1)
-                {
-                    // ARRANGE
-                    this.Arrange(out var expected);
-
-                    // SET Expected
-                    this.Expected = expected;
-
-                    // Print Expected
-                    this.PrintItem("Expected", this.Expected);
+        public override void Assert(T expected, T actual) => Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, actual);
 
 
-                    // ACT
-                    this.Act(out var actual);
-
-                    // SET Actual
-                    this.Actual = actual;
-
-                    // Print Actual
-                    this.PrintItem("Actual", this.Actual);
-                }
-                else
-                {
-                    // ARRANGE
-                    this.Arrange(out var expected, index);
-
-                    // SET Expected
-                    this.Expected = expected;
-
-                    // Print Expected
-                    this.PrintItem("Expected", this.Expected, index);
+        /// <summary>
+        /// テストの期待値 (<paramref name="expected"/>) と実際のテスト結果 (<paramref name="actual"/>) が等しいかどうかをテストします。
+        /// </summary>
+        /// <typeparam name="TItem">
+        /// <typeparamref name="T"/> がコレクション型の場合の各アイテムの型を指定します。
+        /// </typeparam>
+        /// <param name="expected">
+        /// テストの期待値。
+        /// </param>
+        /// <param name="actual">
+        /// 実際のテスト結果。
+        /// </param>
+        /// <exception cref="AssertFailedException">
+        /// テストに失敗しました。
+        /// </exception>
+        public override void AssertForEach<TItem>(TItem expected, TItem actual) => Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, actual);
 
 
-                    // ACT
-                    this.Act(out var actual, index);
-
-                    // SET Actual
-                    this.Actual = actual;
-
-                    // Print Actual
-                    this.PrintItem("Actual", this.Actual, index);
-                }
-
-
-                // ASSERT
-                if (this.Expected != null || this.Actual != null)
-                {
-                    Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(this.Expected, this.Actual);
-                }
-
-
-                // Increment counter
-                index++;
-
-            } while ((index > 0) && (index < count));
-        }
+        /// <summary>
+        /// テストに失敗したときにストーされる例外 (<see cref="AssertFailedException"/>) を取得します。
+        /// </summary>
+        /// <param name="message">
+        /// エラーについて説明するメッセージ。
+        /// </param>
+        /// <returns>
+        /// テストに失敗したときにストーされる例外。
+        /// </returns>
+        protected sealed override Exception GetAssertFailedException(string message) => new AssertFailedException(message);
     }
 }

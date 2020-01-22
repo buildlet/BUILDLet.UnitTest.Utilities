@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="f4a87542-eab7-4154-9ee3-2b0ce1578ba4" revisionNumber="2">
+<topic id="f4a87542-eab7-4154-9ee3-2b0ce1578ba4" revisionNumber="4">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
 			<para>Version 1.0.2.0 was released on November 30, 2019.
@@ -17,11 +17,10 @@
           
           <listItem>
             <para>
-              Properties of
               <codeEntityReference linkText="Expected">P:BUILDLet.Standard.UnitTest.TestParameter`1.Expected</codeEntityReference>
-              and
+              property and
               <codeEntityReference linkText="Actual">P:BUILDLet.Standard.UnitTest.TestParameter`1.Actual</codeEntityReference>
-              were added to
+              property were added to
               <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.TestParameter">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
             </para>
@@ -31,14 +30,8 @@
             <para>
               Signature of <codeInline>Print</codeInline> method of
               <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.TestParameter">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
-              class and
-              <codeEntityReference autoUpgrade="true">
-                M:BUILDLet.UnitTest.Utilities.TestParameter`1.Assert(System.Boolean,System.Boolean,System.Int32,System.Int32)
-              </codeEntityReference>
-              method of
-              <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.Extensions.TestParameterExtensions">
-                T:BUILDLet.UnitTest.Utilities.TestParameter`1
-              </codeEntityReference>
+              class and <codeInline>Assert(Boolean, Boolean, Int32, Int32)</codeInline> method of
+              <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.Extensions.TestParameterExtensions">T:BUILDLet.UnitTest.Utilities.TestParameter`1</codeEntityReference>
               class was changed.
             </para>
           </listItem>

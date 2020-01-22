@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="97012514-55b2-4110-95c7-574349e0edac" revisionNumber="1">
+<topic id="97012514-55b2-4110-95c7-574349e0edac" revisionNumber="2">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
 			<para>Version 1.2.0.0 was released on January 11, 2020.
@@ -18,21 +18,20 @@
               and
               <codeEntityReference>P:BUILDLet.Standard.UnitTest.TestParameter`1.Actual</codeEntityReference>
               of
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class was removed.
               <lineBreak/>
               However, instead of it, iterative execution of
               <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Arrange(`0@)</codeEntityReference>,
-              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Act(`0@)</codeEntityReference>, and
-              <codeEntityReference autoUpgrade="true">M:BUILDLet.UnitTest.Utilities.TestParameter`1.Assert(System.Boolean,System.Boolean,System.Int32,System.Int32)</codeEntityReference>
-              mothod was supported.
+              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Act(`0@)</codeEntityReference>,
+              and <codeInline>Assert(Boolean, Boolean, Int32, Int32)</codeInline> mothod was supported.
             </para>
           </listItem>
 
           <listItem>
             <para>
               <codeInline>IsMultipleParameter</codeInline> property was removed from
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
             </para>
           </listItem>
@@ -41,7 +40,7 @@
             <para>
               <codeEntityReference>P:BUILDLet.Standard.UnitTest.TestParameter`1.Expected</codeEntityReference>
               property of
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class was changed into normal member from abstract member.
             </para>
           </listItem>
@@ -49,7 +48,7 @@
           <listItem>
             <para>
               <codeInline>Print(Boolean, Boolean, Int32)</codeInline> method was removed from
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
             </para>
           </listItem>
@@ -59,7 +58,7 @@
               Abstract method
               <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Arrange(`0@)</codeEntityReference>
               was added method to
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
             </para>
           </listItem>
@@ -69,17 +68,15 @@
               Abstract method
               <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Act(`0@)</codeEntityReference>
               was added method to
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
             </para>
           </listItem>
 
           <listItem>
             <para>
-              Signature of
-              <codeEntityReference autoUpgrade="true">M:BUILDLet.UnitTest.Utilities.TestParameter`1.Assert(System.Boolean,System.Boolean,System.Int32,System.Int32)</codeEntityReference>
-              method of
-              <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.UnitTest.Utilities.TestParameter`1</codeEntityReference>
+              Signature of <codeInline>Assert(Boolean, Boolean, Int32, Int32)</codeInline> method of
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.UnitTest.Utilities.TestParameter&lt;T&gt;">T:BUILDLet.UnitTest.Utilities.TestParameter`1</codeEntityReference>
               class was changed.
             </para>
           </listItem>

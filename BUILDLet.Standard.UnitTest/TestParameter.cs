@@ -20,6 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 ***************************************************************************************************/
 
 using System;
+using System.Collections; // for IEnumerator
 
 namespace BUILDLet.Standard.UnitTest
 {
@@ -27,9 +28,11 @@ namespace BUILDLet.Standard.UnitTest
     /// 単体テストで使用するテスト パラメーターを実装するための抽象クラスです。
     /// </summary>
     /// <typeparam name="T">
-    /// テストの期待値 (<see cref="TestParameter{T}.Expected"/>) および
-    /// 実際のテスト結果 (<see cref="TestParameter{T}.Actual"/>) の型を指定します。
+    /// テストの期待値 (<see cref="Expected"/>) および 実際のテスト結果 (<see cref="Actual"/>) の型を指定します。
     /// </typeparam>
+    /// <remarks>
+    /// このクラスの使用方法の詳細は <see cref="Validate(bool, bool, bool, bool, bool)" autoUpgrade="true"/> メソッドを参照してください。
+    /// </remarks>
     public abstract class TestParameter<T>
     {
         // Innver Value(s):
@@ -37,6 +40,10 @@ namespace BUILDLet.Standard.UnitTest
         private T actual;
         private bool expected_is_initialized = false;
         private bool actual_is_initialized = false;
+
+        // Message(s) for AssertFailedException
+        private static string NumberOfActualLessThanExpectedExceptionMessage = $"Number of <{nameof(Actual)}> is less than <{nameof(Expected)}>.";
+        private static string NumberOfActualGreaterThanExpectedExceptionMessage = $"Number of <{nameof(Actual)}> is greater than <{nameof(Expected)}>.";
 
 
         /// <summary>
@@ -52,7 +59,7 @@ namespace BUILDLet.Standard.UnitTest
         /// <see cref="Expected"/> が初期化されていません。
         /// </exception>
         /// <remarks>
-        /// <see cref="Arrange(out T)" autoUpgrade="true"/> メソッドを実行すると、このプロパティに値が設定されます。
+        /// <see cref="Arrange(out T)" autoUpgrade="true"/> メソッドで <c>expected</c> に格納された値が、このプロパティに設定されます。
         /// </remarks>
         public T Expected
         {
@@ -64,7 +71,7 @@ namespace BUILDLet.Standard.UnitTest
                 // RETURN
                 return this.expected;
             }
-            protected set
+            set
             {
                 // SET value
                 this.expected = value;
@@ -82,7 +89,7 @@ namespace BUILDLet.Standard.UnitTest
         /// <see cref="Actual"/> が初期化されていません。
         /// </exception>
         /// <remarks>
-        /// <see cref="Act(out T)" autoUpgrade="true"/> メソッドを実行すると、このプロパティに値が設定されます。
+        /// <see cref="Act(out T)" autoUpgrade="true"/> メソッドで <c>actual</c> に格納された値が、このプロパティに設定されます。
         /// </remarks>
         public T Actual
         {
@@ -94,7 +101,7 @@ namespace BUILDLet.Standard.UnitTest
                 // RETURN
                 return this.actual;
             }
-            protected set
+            set
             {
                 // SET value
                 this.actual = value;
@@ -103,7 +110,6 @@ namespace BUILDLet.Standard.UnitTest
                 this.actual_is_initialized = true;
             }
         }
-
 
 
         /// <summary>
@@ -117,142 +123,324 @@ namespace BUILDLet.Standard.UnitTest
         /// </exception>
         /// <remarks>
         /// <para>
-        /// <paramref name="expected"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
-        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
+        /// <see cref="Validate(bool, bool, bool, bool, bool)" autoUpgrade="true"/> メソッドのパラメーター <c>noArrange</c> に <c>false</c> を指定して実行すると、
+        /// <see cref="Validate(bool, bool, bool, bool, bool)" autoUpgrade="true"/> メソッドの実行中に <see cref="Arrange(out T)" autoUpgrade="true"/> メソッドが実行されます。
+        /// </para>
+        /// <note type="implement">
+        /// 継承先のクラスでこのメソッドをオーバーライドして、<paramref name="expected"/> にテストの期待値を格納してください。<br/>
+        /// その際、基底クラス (<see cref="TestParameter{T}" qualifyHint="true"/>) の <see cref="Arrange(out T)" autoUpgrade="true"/> メソッドはコールしないでください。
         /// (<see cref="NotImplementedException"/> がスローされます。)
-        /// </para>
-        /// <para>
-        /// <paramref name="expected"/> に格納した値は <see cref="TestParameter{T}.Expected"/> から参照できます。
-        /// </para>
+        /// </note>
+        /// <note type="note">
+        /// <paramref name="expected"/> に格納した値は <see cref="Expected"/> から参照できます。
+        /// </note>
         /// </remarks>
         public virtual void Arrange(out T expected) { throw new NotImplementedException(); }
 
+
         /// <summary>
-        /// 繰り返しテストのためのテストの事前準備 (Arrange) で実行される処理を実装します。
+        /// テストの実行 (Act) 処理を実装します。
+        /// </summary>
+        /// <param name="actual">
+        /// 実際のテスト結果。
+        /// </param>
+        /// <exception cref="NotImplementedException">
+        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// <see cref="Validate(bool, bool, bool, bool, bool)" autoUpgrade="true"/> メソッドのパラメーター <c>noAct</c> に <c>false</c> を指定して実行すると、
+        /// <see cref="Validate(bool, bool, bool, bool, bool)" autoUpgrade="true"/> メソッドの実行中に <see cref="Act(out T)" autoUpgrade="true"/> メソッドが実行されます。
+        /// </para>
+        /// <note type="implement">
+        /// 継承先のクラスでこのメソッドをオーバーライドして、<paramref name="actual"/> にテスト結果を格納してください。<br/>
+        /// その際、基底クラス (<see cref="TestParameter{T}" qualifyHint="true"/>) の <see cref="Act(out T)" autoUpgrade="true"/> メソッドはコールしないでください。
+        /// (<see cref="NotImplementedException"/> がスローされます。)
+        /// </note>
+        /// <note type="note">
+        /// <paramref name="actual"/> に格納した値は <see cref="Actual"/> から参照できます。
+        /// </note>
+        /// </remarks>
+        public virtual void Act(out T actual) { throw new NotImplementedException(); }
+
+
+        /// <summary>
+        /// テストの期待値 (<paramref name="expected"/>) に対する実際のテスト結果 (<paramref name="actual"/>) を検証する処理 (Assert) を実装します。
         /// </summary>
         /// <param name="expected">
         /// テストの期待値。
         /// </param>
-        /// <param name="index">
-        /// 繰り返し処理のためのインデックス。
-        /// </param>
-        /// <exception cref="NotImplementedException">
-        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// <paramref name="expected"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
-        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
-        /// (<see cref="NotImplementedException"/> がスローされます。)
-        /// </para>
-        /// <para>
-        /// <paramref name="expected"/> に格納した値は <see cref="TestParameter{T}.Expected"/> から参照できます。
-        /// </para>
-        /// <para>
-        /// 繰り返してテストを実行する場合は、<see cref="Arrange(out T)"/> ではなく、このメソッドが実行されます。
-        /// </para>
-        /// </remarks>
-        public virtual void Arrange(out T expected, int index) { throw new NotImplementedException(); }
-
-
-        /// <summary>
-        /// テストの実行 (Act) で実行される処理を実装します。
-        /// </summary>
         /// <param name="actual">
-        /// テスト結果。
+        /// 実際のテスト結果。
         /// </param>
-        /// <exception cref="NotImplementedException">
-        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
-        /// </exception>
         /// <remarks>
+        /// <note type="implement">
         /// <para>
-        /// <paramref name="actual"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
-        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
-        /// (<see cref="NotImplementedException"/> がスローされます。)
+        /// 継承先のクラスでこのメソッドをオーバーライドして、通常は、テストの期待値 (<paramref name="expected"/>) と
+        /// 実際のテスト結果 (<paramref name="actual"/>) が等しいかどうかを検証する処理を実装してください。
         /// </para>
         /// <para>
-        /// <paramref name="actual"/> に格納した値は <see cref="TestParameter{T}.Actual"/> から参照できます。
+        /// 検証に失敗したときは、テストが失敗したことを示す例外をスローしてください。
         /// </para>
+        /// </note>
         /// </remarks>
-        public virtual void Act(out T actual) { throw new NotImplementedException(); }
+        public abstract void Assert(T expected, T actual);
+
 
         /// <summary>
-        /// 繰り返しテストのためのテストの実行 (Act) で実行される処理を実装します。
+        /// テストの期待値 (<paramref name="expected"/>) に対する実際のテスト結果 (<paramref name="actual"/>) を検証する処理 (Assert) を実装します。
         /// </summary>
+        /// <typeparam name="TItem">
+        /// <typeparamref name="T"/> がコレクション型の場合の各アイテムの型を指定します。
+        /// </typeparam>
+        /// <param name="expected">
+        /// テストの期待値。(<see cref="Expected"/> がコレクション型の場合の各アイテム。)
+        /// </param>
         /// <param name="actual">
-        /// テスト結果。
+        /// 実際のテスト結果。(<see cref="Actual"/> がコレクション型の場合の各アイテム。)
         /// </param>
-        /// <param name="index">
-        /// 繰り返し処理のためのインデックス。
-        /// </param>
-        /// <exception cref="NotImplementedException">
-        /// このメソッドは、既定で <see cref="NotImplementedException"/> をスローします。
-        /// </exception>
         /// <remarks>
         /// <para>
-        /// <paramref name="actual"/> にテストの期待値が格納されるように、継承先のクラスでこのメソッドをオーバーライドしてください。<br/>
-        /// その際、基底クラスの <see cref="Arrange(out T)"/> メソッドはコールしないでください。
-        /// (<see cref="NotImplementedException"/> がスローされます。)
+        /// <typeparamref name="T"/> がコレクション型である場合に、
+        /// <see cref="Expected"/> および <see cref="Actual"/> の各アイテムに対して行う検証処理を実装します。
+        /// </para>
+        /// <note type="implement">
+        /// <para>
+        /// 継承先のクラスでこのメソッドをオーバーライドして、通常は、テストの期待値 (<paramref name="expected"/>) と
+        /// 実際のテスト結果 (<paramref name="actual"/>) が等しいかどうかを検証する処理を実装してください。<br/>
         /// </para>
         /// <para>
-        /// <paramref name="actual"/> に格納した値は <see cref="TestParameter{T}.Actual"/> から参照できます。
+        /// 検証に失敗したときは、テストが失敗したことを示す例外をスローしてください。
         /// </para>
-        /// <para>
-        /// 繰り返してテストを実行する場合は、<see cref="Act(out T)"/> ではなく、このメソッドが実行されます。
-        /// </para>
+        /// </note>
         /// </remarks>
-        public virtual void Act(out T actual, int index) { throw new NotImplementedException(); }
+        public abstract void AssertForEach<TItem>(TItem expected, TItem actual);
 
 
         /// <summary>
-        /// コンソール (標準出力) に、キーワード (<see cref="TestParameter{T}.Keyword"/>) を出力します。
+        /// テストに失敗したときにストーされる例外を取得します。
+        /// </summary>
+        /// <param name="message">
+        /// エラーについて説明するメッセージ。
+        /// </param>
+        /// <returns>
+        /// テストに失敗したときにストーされる例外。
+        /// </returns>
+        protected abstract Exception GetAssertFailedException(string message);
+
+
+        /// <summary>
+        /// このテスト パラメーターに設定されたテストを実行して、テスト結果を検証します。<br/>
+        /// また、それらをコンソール (標準出力) に出力します。
         /// </summary>
         /// <param name="noBlankLine">
-        /// 出力前に改行しない場合に <c>true</c> を指定します。
+        /// コンソール (標準出力) への出力に対して、先頭に改行をしない場合に <c>true</c> を指定します。
+        /// </param>
+        /// <param name="printKeyword">
+        /// <para>
+        /// キーワード (<see cref="Keyword"/>) を出力しない場合に <c>false</c> を指定します。<br/>
+        /// </para>
+        /// <note type="note">
+        /// キーワード (<see cref="Keyword"/>) が、空文字 (<see cref="String.Empty"/>) または <c>null</c> の場合、<see cref="Keyword"/> は出力されません。
+        /// </note>
+        /// </param>
+        /// <param name="noArrange">
+        /// <para>
+        /// テストの事前準備 (Arrange) として <see cref="Arrange(out T)" autoUpgrade="true"/> メソッドを実行しない場合に <c>true</c> を指定します。
+        /// </para>
+        /// <note type="note">
+        /// 通常は、このパラメーターに <c>false</c> (既定) を指定して、
+        /// <see cref="Arrange(out T)" autoUpgrade="true"/> メソッドを実行することによって <see cref="Expected"/> を設定してください。
+        /// </note>
+        /// </param>
+        /// <param name="noAct">
+        /// <para>
+        /// テストの実行 (Act) 処理として <see cref="Act(out T)" autoUpgrade="true"/> メソッドを実行しない場合に <c>true</c> を指定します。
+        /// </para>
+        /// <note type="note">
+        /// 通常は、このパラメーターに <c>false</c> (既定) を指定して、
+        /// <see cref="Act(out T)" autoUpgrade="true"/> メソッドを実行することによって <see cref="Actual"/> を設定してください。
+        /// </note>
+        /// </param>
+        /// <param name="notEnumerable">
+        /// <para>
+        /// <typeparamref name="T"/> がコレクション型である場合に <c>false</c> (既定) を指定すると、
+        /// <see cref="Assert(T, T)" autoUpgrade="true"/> メソッドによる <see cref="Expected"/> と <see cref="Actual"/> に対する検証が実行されるのではなく、
+        /// <see cref="AssertForEach{TItem}(TItem, TItem)" autoUpgrade="true"/> メソッドによる <see cref="Expected"/> および <see cref="Actual"/> それぞれの各アイテムに対する検証が実行されます。
+        /// </para>
+        /// <para>
+        /// <c>true</c> が指定されると、コレクション型の <see cref="Expected"/> および <see cref="Actual"/> それぞれの各アイテムに対する検証は実行されないので、
+        /// 独自に <see cref="Assert(T, T)" autoUpgrade="true"/> メソッドをオーバーライドしていない場合は、通常、<c>false</c> (既定) を指定してください。
+        /// </para>
         /// </param>
         /// <remarks>
-        /// キーワード (<see cref="TestParameter{T}.Keyword"/>) が、空文字または <c>null</c> の場合は出力されません。
+        /// <para>
+        /// テストの期待値 (<see cref="Expected"/>) に対する実際のテスト結果 (<see cref="Actual"/>) を検証して、それらをコンソール (標準出力) に出力します。<br/>
+        /// 通常、これらの値 (<see cref="Expected"/> および <see cref="Actual"/>) が等しいかどうかをテストします。
+        /// </para>
+        /// <para>
+        /// <see cref="Validate(bool, bool, bool, bool, bool)" autoUpgrade="true"/> メソッドを実行すると、
+        /// <see cref="Act(out T)" autoUpgrade="true"/> メソッド、<see cref="Arrange(out T)" autoUpgrade="true"/> メソッド、および
+        /// <see cref="Assert(T, T)" autoUpgrade="true"/> メソッド (あるいは <see cref="AssertForEach{TItem}(TItem, TItem)" autoUpgrade="true"/> メソッド) が、
+        /// これらの順番で実行されます。
+        /// </para>
+        /// <para>
+        /// 簡易的に表現すると、以下のようなコードが実行されます。
+        /// <code language="cs" numberLines="true">
+        /// if (!noArrange)
+        /// {
+        ///     // ARRANGE
+        ///     Arrange(out var expected);
+        /// 
+        ///     Expected = expected;
+        /// }
+        /// 
+        /// if (!noAct)
+        /// {
+        ///     // ACT
+        ///     Act(out var actual);
+        /// 
+        ///     Actual = actual;
+        /// }
+        /// 
+        /// if (notEnumerable)
+        /// {
+        ///     // ASSERT
+        ///     Assert(Expected, Actual);
+        /// }
+        /// else
+        /// {
+        ///     while (eExpected.MoveNext())
+        ///     {
+        ///         var ee = expected.GetEnumerator();
+        ///         var ae = actual.GetEnumerator();
+        ///     
+        ///         // ASSERT
+        ///         AssertForEach(ee.Current, ae.Current);
+        ///     }
+        /// }
+        /// </code>
+        /// </para>
         /// </remarks>
-        protected void PrintKeyword(bool noBlankLine = true)
+        public void Validate(bool noBlankLine = true, bool printKeyword = true, bool noArrange = false, bool noAct = false, bool notEnumerable = false)
         {
-            // Blank Line
-            if (!noBlankLine)
+            try
             {
-                Console.WriteLine();
-            }
+                // Update Single or Multiple Operation Flag
+                notEnumerable = (notEnumerable || typeof(T) == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(typeof(T)));
 
-            // Keyword
-            if (!string.IsNullOrWhiteSpace(this.Keyword))
-            {
-                Console.WriteLine($"[{this.Keyword}]");
+
+                // Blank Line
+                if (!noBlankLine)
+                {
+                    Console.WriteLine();
+                }
+
+                // Print Keyword
+                if (printKeyword && !string.IsNullOrWhiteSpace(this.Keyword))
+                {
+                    Console.WriteLine($"[{this.Keyword}]");
+                }
+
+
+                // GET & SET Expected
+                if (!noArrange)
+                {
+                    // ARRANGE
+                    this.Arrange(out var expected);
+
+                    // SET Expected
+                    this.Expected = expected;
+                }
+
+                // Print Expected
+                if (notEnumerable)
+                {
+                    TestParameter<T>.PrintItem("Expected", this.Expected);
+                }
+
+
+                // GET & SET Actual
+                if (!noAct)
+                {
+                    // ACT
+                    this.Act(out var actual);
+
+                    // SET Actual
+                    this.Actual = actual;
+                }
+
+                // Print Actual
+                if (notEnumerable)
+                {
+                    TestParameter<T>.PrintItem("Actual", this.Actual);
+                }
+
+
+                // ASSERT
+                if (notEnumerable)
+                {
+                    if (this.Expected != null || this.Actual != null)
+                    {
+                        this.Assert((T)this.Expected, (T)this.Actual);
+                    }
+                }
+                else
+                {
+                    this.AssertForEachItems(this.Expected as IEnumerable, this.Actual as IEnumerable);
+                }
             }
+            catch (Exception) { throw; }
         }
 
 
-        /// <summary>
-        /// コンソール (標準出力) に、アイテムの名前と値を出力します。
-        /// </summary>
-        /// <param name="name">
-        /// アイテムの名前。
-        /// </param>
-        /// <param name="value">
-        /// アイテムの値。
-        /// </param>
-        /// <param name="index">
-        /// 複数回実行する場合のインデックス。<br/>
-        /// <c>0</c> より小さい値が指定されると、インデックスは出力されません。
-        /// </param>
-        /// <remarks>
-        /// 出力の書式は
-        /// <c><paramref name="name"/> = <paramref name="value"/></c>
-        /// または
-        /// <c><paramref name="name"/> (<paramref name="index"/>) = <paramref name="value"/></c>
-        /// です。
-        /// </remarks>
-        protected void PrintItem(string name, T value, int index = -1)
+        private void AssertForEachItems(IEnumerable expected, IEnumerable actual)
         {
-            Console.WriteLine($"{name}" + (index < 0 ? "" : $" ({index})") + "\t= "
-                + (value == null ? "null" : (value is string ? $"\"{value}\"" : value.ToString())));
+            try
+            {
+                var eExpected = expected.GetEnumerator();
+                var eActual = actual.GetEnumerator();
+                var index = 0;
+
+                while (eExpected.MoveNext())
+                {
+                    // Print Expected
+                    TestParameter<T>.PrintItem("Expected", eExpected.Current, index);
+
+                    // Validation:
+                    if (!eActual.MoveNext())
+                    {
+                        throw this.GetAssertFailedException(TestParameter<T>.NumberOfActualLessThanExpectedExceptionMessage);
+                    }
+
+                    // Print Actual
+                    TestParameter<T>.PrintItem("Actual", eActual.Current, index);
+
+                    // ASSERT
+                    if (eExpected.Current != null || eActual.Current != null)
+                    {
+                        this.AssertForEach(eExpected.Current as object, eActual.Current as object);
+                    }
+
+                    // Increment Counter
+                    index++;
+                }
+
+                // Validation:
+                if (!eExpected.MoveNext() && eActual.MoveNext())
+                {
+                    // Print Actual
+                    TestParameter<T>.PrintItem("Actual", eActual.Current, index);
+
+                    throw this.GetAssertFailedException(TestParameter<T>.NumberOfActualGreaterThanExpectedExceptionMessage);
+                }
+            }
+            catch (Exception) { throw; }
+        }
+
+        private static void PrintItem(string name, object value, int index = -1)
+        {
+            Console.WriteLine($"{name}" + (index < 0 ? "" : $" [{index}]") + "\t= " + (value == null ? "null" : (value is string ? $"\"{value}\"" : value.ToString())));
         }
     }
 }
