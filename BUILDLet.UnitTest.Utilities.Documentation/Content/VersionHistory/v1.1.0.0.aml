@@ -47,7 +47,7 @@
               and
               <codeEntityReference>P:BUILDLet.Standard.UnitTest.TestParameter`1.Actual</codeEntityReference>
               of
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class were supported.
             </para>
           </listItem>
@@ -55,7 +55,7 @@
           <listItem>
             <para>
               <codeInline>IsMultipleParameter</codeInline> property was added to
-              <codeEntityReference linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" qualifyHint="true">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
+              <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;" >T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
             </para>
           </listItem>
