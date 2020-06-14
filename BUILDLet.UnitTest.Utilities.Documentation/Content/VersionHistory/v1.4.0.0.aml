@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="d380eebf-dbb3-46f0-bff1-9c81afe1e046" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>
+        Version 1.4.0.0 was released on June 13, 2020.
+			</para>
+		</introduction>
+
+		<section>
+			<title>Changes in This Release</title>
+			<content>
+        <list class="bullet">
+
+          <listItem>
+            <para>
+              Refactoring for whole part was done.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              <codeInline>AssertForEach&lt;TItem&gt;</codeInline> method was removed.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              Access level of the <codeInline>set</codeInline> accessor of
+              <codeEntityReference>P:BUILDLet.Standard.UnitTest.TestParameter`1.Expected</codeEntityReference>
+              and
+              <codeEntityReference>P:BUILDLet.Standard.UnitTest.TestParameter`1.Actual</codeEntityReference>
+              property is changed from <codeInline>Public</codeInline> into <codeInline>Protected</codeInline>.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              <codeInline>Virtual</codeInline> methods of 
+              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Arrange(`0@)</codeEntityReference>
+              and
+              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Act(`0@)</codeEntityReference>
+              was changed into <codeInline>Abstract</codeInline> method.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              Signature of
+              <codeEntityReference autoUpgrade="true" linkText="Assert&lt;TItem&gt;">M:BUILDLet.Standard.UnitTest.TestParameter`1.Assert``1(``0,``0)</codeEntityReference>
+              method was changed from <codeInline>Assert(T, T)</codeInline> into <codeInline>Assert&lt;TItem&gt;(TItem, TItem)</codeInline>.
+            </para>
+          </listItem>
+
+          <listItem>
+            <para>
+              Signature of <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Validate(System.Boolean,System.Boolean,System.Boolean)</codeEntityReference>
+              method was changed from <codeInline>Validate(System.Boolean, System.Boolean, System.Boolean, System.Boolean, System.Boolean)</codeInline>
+              into <codeInline>Validate(System.Boolean, System.Boolean, System.Boolean)</codeInline>.
+            </para>
+          </listItem>
+
+        </list>
+      </content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="66de8ecc-dbb4-4717-9284-80f15ee5ad5a" />
+		</relatedTopics>
+
+	</developerConceptualDocument>
+</topic>

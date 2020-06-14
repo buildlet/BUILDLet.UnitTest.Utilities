@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="4fedfe99-0ada-4722-baf7-e3540d8ff719" revisionNumber="1">
+<topic id="4fedfe99-0ada-4722-baf7-e3540d8ff719" revisionNumber="2">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>Version 1.3.0.0 was released on January 22, 2020.
+			<para>
+        Version 1.3.0.0 was released on January 22, 2020.
 			</para>
 		</introduction>
 
@@ -21,7 +22,7 @@
           <listItem>
             <para>
               When type parameter <codeInline>T</codeInline> is collection class (array or <codeInline>List</codeInline>),
-              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Validate(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)</codeEntityReference>
+              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Validate(System.Boolean,System.Boolean,System.Boolean)</codeEntityReference>
               method of
               <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class works for each item.
@@ -35,7 +36,7 @@
               class.
               <lineBreak/>
               Instead of it,
-              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Validate(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)</codeEntityReference>
+              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Validate(System.Boolean,System.Boolean,System.Boolean)</codeEntityReference>
               method was added to
               <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
@@ -53,13 +54,13 @@
           <listItem>
             <para>
               Abstract method
-              <codeEntityReference autoUpgrade="true">M:BUILDLet.Standard.UnitTest.TestParameter`1.Assert(`0,`0)</codeEntityReference>
+              <codeEntityReference autoUpgrade="true" linkText="Assert&lt;TItem&gt;">M:BUILDLet.Standard.UnitTest.TestParameter`1.Assert``1(``0,``0)</codeEntityReference>
               was added to
               <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
               <lineBreak/>
               And,
-              <codeEntityReference autoUpgrade="true">M:BUILDLet.UnitTest.Utilities.TestParameter`1.Assert(`0,`0)</codeEntityReference>
+              <codeEntityReference autoUpgrade="true" linkText="Assert&lt;TItem&gt;">M:BUILDLet.Standard.UnitTest.TestParameter`1.Assert``1(``0,``0)</codeEntityReference>
               method overrided it in
               <codeEntityReference qualifyHint="true" linkText="BUILDLet.UnitTest.Utilities.TestParameter&lt;T&gt;">T:BUILDLet.UnitTest.Utilities.TestParameter`1</codeEntityReference>
               class.
@@ -69,14 +70,11 @@
           <listItem>
             <para>
               Abstract method
-              <codeEntityReference autoUpgrade="true" linkText="AssertForEach&lt;TItem&gt;">M:BUILDLet.Standard.UnitTest.TestParameter`1.AssertForEach``1(``0,``0)</codeEntityReference>
-              was added to
+              <codeInline>AssertForEach&lt;TItem&gt;</codeInline> was added to
               <codeEntityReference qualifyHint="true" linkText="BUILDLet.Standard.UnitTest.TestParameter&lt;T&gt;">T:BUILDLet.Standard.UnitTest.TestParameter`1</codeEntityReference>
               class.
               <lineBreak/>
-              And,
-              <codeEntityReference autoUpgrade="true" linkText="AssertForEach&lt;TItem&gt;">M:BUILDLet.UnitTest.Utilities.TestParameter`1.AssertForEach``1(``0,``0)</codeEntityReference>
-              method overrided it in
+              And, <codeInline>AssertForEach&lt;TItem&gt;</codeInline> method overrided it in
               <codeEntityReference qualifyHint="true" linkText="BUILDLet.UnitTest.Utilities.TestParameter&lt;T&gt;">T:BUILDLet.UnitTest.Utilities.TestParameter`1</codeEntityReference>
               class.
             </para>

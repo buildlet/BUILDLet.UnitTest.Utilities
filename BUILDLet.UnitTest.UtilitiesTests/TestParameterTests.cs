@@ -18,9 +18,7 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FO
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***************************************************************************************************/
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BUILDLet.UnitTest.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,31 +28,12 @@ namespace BUILDLet.UnitTest.Utilities.Tests
     [TestClass]
     public class TestParameterTests
     {
-        [TestMethod]
-        [TestCategory("Exception")]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void ArrangeNotImplementedExceptionTest()
+        // TestParameter for NotInitializedTest
+        public class NotInitializedTestParameter : TestParameter<object>
         {
-            // SET Parameter
-            TestParameter<int> param = new TestParameter<int> { Expected = 0, Actual = 0 };
-
-            // TEST
-            param.Validate(noArrange: false, noAct: true);
+            public override void Act(out object actual) => throw new NotImplementedException();
+            public override void Arrange(out object expected) => throw new NotImplementedException();
         }
-
-
-        [TestMethod]
-        [TestCategory("Exception")]
-        [ExpectedException(typeof(NotImplementedException))]
-        public void ActNotImplementedExceptionTest()
-        {
-            // SET Parameter
-            TestParameter<int> param = new TestParameter<int> { Expected = 0, Actual = 0 };
-
-            // TEST
-            param.Validate(noArrange: true, noAct: false);
-        }
-
 
         [TestMethod]
         [TestCategory("Exception")]
@@ -62,12 +41,11 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         public void ExpectedNotInitializedExceptionTest()
         {
             // SET Parameter
-            TestParameter<int> param = new TestParameter<int>();
+            NotInitializedTestParameter param = new NotInitializedTestParameter();
 
             // TEST
             Console.WriteLine(param.Expected);
         }
-
 
         [TestMethod]
         [TestCategory("Exception")]
@@ -75,98 +53,31 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         public void ActualNotInitializedExceptionTest()
         {
             // SET Parameter
-            TestParameter<int> param = new TestParameter<int>();
+            NotInitializedTestParameter param = new NotInitializedTestParameter();
 
             // TEST
             Console.WriteLine(param.Actual);
         }
 
 
-        [DataTestMethod]
-        [DataRow(0, 0)]
-        [DataRow(1, 1)]
-        [DataRow(null, null, DisplayName = "Expected = null, Actual = null")]
-        public void ValidateWithoutArrangeActIntPassTest(int expected, int actual) => ValidateWithoutArrangeActIntTest(expected, actual, nameof(ValidateWithoutArrangeActIntPassTest));
-
-        [DataTestMethod]
-        [DataRow(0, 1)]
-        [DataRow(null, 1, DisplayName = "Expected = null")]
-        [DataRow(1, null, DisplayName = "Actual = null")]
-        [TestCategory("Exception")]
-        [ExpectedException(typeof(AssertFailedException))]
-        public void ValidateWithoutArrangeActIntFailTest(int expected, int actual) => ValidateWithoutArrangeActIntTest(expected, actual, nameof(ValidateWithoutArrangeActIntFailTest));
-
-        private void ValidateWithoutArrangeActIntTest(int expected, int actual, string keyword)
+        // TestParameter for Validate Method
+        public class ValidateMethodTestParameter<T> : TestParameter<T>
         {
-            // SET Parameter
-            TestParameter<int> param = new TestParameter<int>
-            {
-                Keyword = keyword,
-                Expected = expected,
-                Actual = actual,
-            };
+            public T ExpectedValue;
+            public T ActualValue;
 
-            // TEST
-            param.Validate(noAct: true, noArrange: true);
-        }
+            // SET Expected
+            public override void Arrange(out T expected) => expected = this.ExpectedValue;
 
-
-        [DataTestMethod]
-        [DataRow("ABC", "ABC")]
-        [DataRow("", "", DisplayName = "Expected = Actual = String.Empty")]
-        [DataRow(null, null, DisplayName = "Expected = Actual = null")]
-        private void ValidateWithoutArrangeActStringPassTest(string expected, string actual)
-            => ValidateWithoutArrangeActStringTest(expected, actual, nameof(ValidateWithoutArrangeActStringPassTest));
-
-        [DataTestMethod]
-        [DataRow("ABC", "XYZ")]
-        [DataRow(null, "XYZ", DisplayName = "Expected = null")]
-        [DataRow("ABC", null, DisplayName = "Actual = null")]
-        [DataRow("", "XYZ", DisplayName = "Expected = String.Empty")]
-        [DataRow("ABC", "", DisplayName = "Actual = String.Empty")]
-        [TestCategory("Exception")]
-        [ExpectedException(typeof(AssertFailedException))]
-        private void ValidateWithoutArrangeActStringFailTest(string expected, string actual)
-            => ValidateWithoutArrangeActStringTest(expected, actual, nameof(ValidateWithoutArrangeActStringFailTest));
-
-        private void ValidateWithoutArrangeActStringTest(string expected, string actual, string keyword)
-        {
-            // SET Parameter
-            TestParameter<string> param = new TestParameter<string>
-            {
-                Keyword = keyword,
-                Expected = expected,
-                Actual = actual,
-            };
-
-            // TEST
-            param.Validate(noAct: true, noArrange: true);
-        }
-
-
-        public class ValidateTestParameter<T> : TestParameter<T>
-        {
-            public T Value1;
-            public T Value2;
-
-            public override void Arrange(out T expected)
-            {
-                // SET Expected
-                expected = this.Value1;
-            }
-
-            public override void Act(out T actual)
-            {
-                // GET Actual
-                actual = this.Value2;
-            }
+            // GET Actual
+            public override void Act(out T actual) => actual = this.ActualValue;
         }
 
 
         [DataTestMethod]
         [DataRow(0, 0)]
         [DataRow(1, 1)]
-        [DataRow(null, null, DisplayName = "Expected = null, Actual = null")]
+        [DataRow(null, null, DisplayName = "Expected, Actual = null")]
         public void ValidateIntPassTest(int expected, int actual) => ValidateIntTest(expected, actual, nameof(ValidateIntPassTest));
 
         [DataTestMethod]
@@ -177,25 +88,25 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [ExpectedException(typeof(AssertFailedException))]
         public void ValidateIntFailTest(int expected, int actual) => ValidateIntTest(expected, actual, nameof(ValidateIntFailTest));
 
-        private void ValidateIntTest(int expected, int actual, string keyword)
+        public void ValidateIntTest(int expected, int actual, string keyword)
         {
             // SET Parameter
-            ValidateTestParameter<int> param = new ValidateTestParameter<int>
+            ValidateMethodTestParameter<int> param = new ValidateMethodTestParameter<int>
             {
                 Keyword = keyword,
-                Value1 = expected,
-                Value2 = actual,
+                ExpectedValue = expected,
+                ActualValue = actual,
             };
 
             // TEST
             param.Validate();
         }
-        
+
 
         [DataTestMethod]
         [DataRow("ABC", "ABC")]
-        [DataRow("", "", DisplayName = "Expected = Actual = String.Empty")]
-        [DataRow(null, null, DisplayName = "Expected = Actual = null")]
+        [DataRow("", "", DisplayName = "Expected, Actual = String.Empty")]
+        [DataRow(null, null, DisplayName = "Expected, Actual = null")]
         public void ValidateStringPassTest(string expected, string actual) => ValidateStringTest(expected, actual, nameof(ValidateStringPassTest));
 
         [DataTestMethod]
@@ -208,14 +119,14 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [ExpectedException(typeof(AssertFailedException))]
         public void ValidateStringFailTest(string expected, string actual) => ValidateStringTest(expected, actual, nameof(ValidateStringFailTest));
 
-        private void ValidateStringTest(string expected, string actual, string keyword)
+        public void ValidateStringTest(string expected, string actual, string keyword)
         {
             // SET Parameter
-            ValidateTestParameter<string> param = new ValidateTestParameter<string>
+            ValidateMethodTestParameter<string> param = new ValidateMethodTestParameter<string>
             {
                 Keyword = keyword,
-                Value1 = expected,
-                Value2 = actual,
+                ExpectedValue = expected,
+                ActualValue = actual,
             };
 
             // TEST
@@ -234,14 +145,14 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [ExpectedException(typeof(AssertFailedException))]
         public void ValidateIntArrayFailTest(int[] expected, int[] actual) => ValidateIntArrayTest(expected, actual, nameof(ValidateIntArrayFailTest));
 
-        private void ValidateIntArrayTest(int[] expected, int[] actual, string keyword)
+        public void ValidateIntArrayTest(int[] expected, int[] actual, string keyword)
         {
             // SET Parameter
-            ValidateTestParameter<int[]> param = new ValidateTestParameter<int[]>
+            ValidateMethodTestParameter<int[]> param = new ValidateMethodTestParameter<int[]>
             {
                 Keyword = keyword,
-                Value1 = expected,
-                Value2 = actual,
+                ExpectedValue = expected,
+                ActualValue = actual,
             };
 
             // TEST
@@ -262,14 +173,14 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         [ExpectedException(typeof(AssertFailedException))]
         public void ValidateStringArrayFailTest(string[] expected, string[] actual, string _) => ValidateStringArrayTest(expected, actual, nameof(ValidateStringArrayFailTest));
 
-        private void ValidateStringArrayTest(string[] expected, string[] actual, string keyword)
+        public void ValidateStringArrayTest(string[] expected, string[] actual, string keyword)
         {
             // SET Parameter
-            ValidateTestParameter<string[]> param = new ValidateTestParameter<string[]>
+            ValidateMethodTestParameter<string[]> param = new ValidateMethodTestParameter<string[]>
             {
                 Keyword = keyword,
-                Value1 = expected,
-                Value2 = actual,
+                ExpectedValue = expected,
+                ActualValue = actual,
             };
 
             // TEST
@@ -285,11 +196,11 @@ namespace BUILDLet.UnitTest.Utilities.Tests
         public void ValidateArrayNumberMismatchTest(int[] expected, int[] actual, string message, string _)
         {
             // SET Parameter
-            ValidateTestParameter<int[]> param = new ValidateTestParameter<int[]>
+            ValidateMethodTestParameter<int[]> param = new ValidateMethodTestParameter<int[]>
             {
                 Keyword = nameof(ValidateArrayNumberMismatchTest),
-                Value1 = expected,
-                Value2 = actual,
+                ExpectedValue = expected,
+                ActualValue = actual,
             };
 
             try
