@@ -18,7 +18,6 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FO
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***************************************************************************************************/
-
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -31,28 +30,18 @@ namespace BUILDLet.UnitTest.Utilities
     /// テストの期待値 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Expected"/>) および
     /// 実際のテスト結果 (<see cref="BUILDLet.Standard.UnitTest.TestParameter{T}.Actual"/>) の型。
     /// </typeparam>
-    public class TestParameter<T> : BUILDLet.Standard.UnitTest.TestParameter<T>
+    public abstract class TestParameter<T> : BUILDLet.Standard.UnitTest.TestParameter<T>
     {
+        // ----------------------------------------------------------------------------------------------------
+        // Public, Protected Method(s)
+        // ----------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// テストの期待値 (<paramref name="expected"/>) と実際のテスト結果 (<paramref name="actual"/>) が等しいかどうかを検証します。
         /// </summary>
-        /// <param name="expected">
-        /// テストの期待値。
-        /// </param>
-        /// <param name="actual">
-        /// 実際のテスト結果。
-        /// </param>
-        /// <exception cref="AssertFailedException">
-        /// テストに失敗しました。
-        /// </exception>
-        public override void Assert(T expected, T actual) => Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, actual);
-
-
-        /// <summary>
-        /// テストの期待値 (<paramref name="expected"/>) と実際のテスト結果 (<paramref name="actual"/>) が等しいかどうかをテストします。
-        /// </summary>
         /// <typeparam name="TItem">
-        /// <typeparamref name="T"/> がコレクション型の場合の各アイテムの型を指定します。
+        /// 検証する値の型。
+        /// 通常は <typeparamref name="T"/> と同じ型を指定します。
         /// </typeparam>
         /// <param name="expected">
         /// テストの期待値。
@@ -63,7 +52,7 @@ namespace BUILDLet.UnitTest.Utilities
         /// <exception cref="AssertFailedException">
         /// テストに失敗しました。
         /// </exception>
-        public override void AssertForEach<TItem>(TItem expected, TItem actual) => Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, actual);
+        public override void Assert<TItem>(TItem expected, TItem actual) => Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, actual);
 
 
         /// <summary>

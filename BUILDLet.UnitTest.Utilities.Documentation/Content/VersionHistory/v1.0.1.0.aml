@@ -2,7 +2,8 @@
 <topic id="45446eb2-1f3b-40b7-8d95-a5bf7e8fc0af" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>Version 1.0.1.0 was released on November 24, 2019.
+			<para>
+        Version 1.0.1.0 was released on November 24, 2019.
 			</para>
 		</introduction>
 
@@ -12,7 +13,9 @@
 
 				<list class="bullet">
 					<listItem>
-						<para>Help Documentation is still missing at this version.</para>
+						<para>
+              Help Documentation is still missing at this version.
+            </para>
 					</listItem>
 
 				</list>
