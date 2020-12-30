@@ -78,6 +78,13 @@
             </para>
           </listItem>
 
+          <!-- Version 1.5.1 -->
+          <listItem>
+            <para>
+              <link xlink:href="749c6d64-d8ba-44e2-8a71-19a5271def53" />
+            </para>
+          </listItem>
+
           <!--
           <listItem>
 						<para>[TODO: Add links to each specific version page]</para>
