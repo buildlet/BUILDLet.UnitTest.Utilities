@@ -228,7 +228,7 @@ namespace BUILDLet.UnitTest.Utilities.Tests
                 }
 
                 // Throw AssertFailedException
-                throw e;
+                throw;
             }
             catch (Exception)
             {
