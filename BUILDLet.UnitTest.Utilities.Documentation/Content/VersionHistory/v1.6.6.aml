@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="5ef10072-479a-45df-958c-a3bbfd2d39d7" revisionNumber="1">
+<topic id="dcd93c07-55b8-4efa-9d4c-63c77a9f651d" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
 			<para>
-        Version 1.0.3.0 was released on December 8, 2019.
+				Version 1.6.6 was released on August 16, 2021.
 			</para>
 		</introduction>
 
@@ -12,13 +12,13 @@
 			<content>
 				<list class="bullet">
 
-          <listItem>
+					<listItem>
 						<para>
-              Only Help Documentation was updated.
+              Minor Update (NuGet packages were updated, and configuration of Help Documentation project (<application>SHFB</application>) was changed.)
             </para>
-          </listItem>
+					</listItem>
 
-        </list>
+				</list>
 			</content>
 		</section>
 

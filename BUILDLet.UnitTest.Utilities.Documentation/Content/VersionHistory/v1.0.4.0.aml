@@ -10,8 +10,8 @@
 		<section>
 			<title>Changes in This Release</title>
 			<content>
-
 				<list class="bullet">
+          
 					<listItem>
 						<para>
               Default value of <codeInline>noBlankLine</codeInline> parameter for both <codeInline>Print</codeInline> method of
@@ -20,9 +20,9 @@
               <codeEntityReference linkText="BUILDLet.UnitTest.Utilities.Extensions.TestParameterExtensions">T:BUILDLet.UnitTest.Utilities.TestParameter`1</codeEntityReference>
               class was changed into <codeInline>true</codeInline> from <codeInline>false</codeInline>.
             </para>
+
           </listItem>
         </list>
-
 			</content>
 		</section>
 

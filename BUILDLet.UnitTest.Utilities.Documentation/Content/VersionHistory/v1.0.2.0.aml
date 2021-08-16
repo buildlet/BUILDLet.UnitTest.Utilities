@@ -10,8 +10,8 @@
 		<section>
 			<title>Changes in This Release</title>
 			<content>
-
 				<list class="bullet">
+          
 					<listItem>
 						<para>
               Help Documentation was added.
@@ -38,8 +38,8 @@
               class was changed.
             </para>
           </listItem>
-        </list>
 
+        </list>
 			</content>
 		</section>
 

@@ -10,8 +10,8 @@
 		<section>
 			<title>Changes in This Release</title>
 			<content>
-
         <list class="bullet">
+
           <listItem>
             <para>
               Support for Array of properties of
@@ -81,8 +81,8 @@
               class was changed.
             </para>
           </listItem>
-        </list>
 
+        </list>
       </content>
 		</section>
 
