@@ -21,6 +21,11 @@ Build and Test
 
 This project (Visual Studio Solution) is built and tested on Visual Studio.
 
+Remarks
+-------
+
+- Help documentation (*SHFB* project) for **BUILDLet.Standard.Utilities** is merged into **BUILDLet.UnitTest.Utilities** using [Version Builder Plug-In](https://ewsoftware.github.io/SHFB/html/6c03afba-18d0-4270-b521-c2015c4d97b3.htm).
+
 License
 -------
 
