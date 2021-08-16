@@ -10,16 +10,15 @@
 		<section>
 			<title>Changes in This Release</title>
 			<content>
-
 				<list class="bullet">
-					<listItem>
+
+          <listItem>
 						<para>
               Help Documentation is still missing at this version.
             </para>
 					</listItem>
 
 				</list>
-
 			</content>
 		</section>
 

@@ -6,12 +6,11 @@
         Version 1.1.0.0 was released on December 29, 2019.
 			</para>
 		</introduction>
-
 		<section>
 			<title>Changes in This Release</title>
 			<content>
-
 				<list class="bullet">
+          
           <listItem>
             <para>
               Namespace of <codeInline>BUILDLet.UnitTest.Utilities</codeInline> was changed into
@@ -60,8 +59,8 @@
               class.
             </para>
           </listItem>
+          
         </list>
-
       </content>
 		</section>
 

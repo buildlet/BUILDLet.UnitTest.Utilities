@@ -3,7 +3,9 @@
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
 			<para>
-        The topics in this section describe the various changes made to the <application>BUILDLet Unit Test Utility</application> over the life of the project.
+        The topics in this section describe the various changes made to
+        <application>BUILDLet Unit Test Utility for .NET Core</application>
+        over the life of the project.
       </para>
 		</introduction>
 
@@ -85,10 +87,17 @@
             </para>
           </listItem>
 
-          <!-- Version 1.6 -->
+          <!-- Version 1.6.0 -->
           <listItem>
             <para>
               <link xlink:href="8124d28d-d936-4c04-adca-810349cc1258" />
+            </para>
+          </listItem>
+
+          <!-- Version 1.6.5 -->
+          <listItem>
+            <para>
+              <link xlink:href="dcd93c07-55b8-4efa-9d4c-63c77a9f651d" />
             </para>
           </listItem>
 
